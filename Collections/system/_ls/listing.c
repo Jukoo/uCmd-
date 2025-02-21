@@ -43,6 +43,8 @@ main(int ac, char **av, char**env)
     hdl_error(progamme_status=errno, get_current_dir_name); 
     goto __prlg ; 
   }
+
+  printf("current work directory %s \n", current_work_directory) ; 
   DIR * dir=  opendir(current_work_directory) ;  
   if(!dir) 
   {
@@ -51,14 +53,13 @@ main(int ac, char **av, char**env)
     goto __prlg; 
   }
   struct dirent *dirent = _nptr ; 
-  char fpath[4096] ={0}; 
-  memcpy(fpath , current_work_directory ,  strlen(current_work_directory)) ;
+
   while(_nptr != (dirent=readdir(dir)) )
   { 
-    char *s = current_work_directory ; 
-    sprintf(fpath ,"%s/%s",s,dirent->d_name) ; 
-    get_ownership(fpath) ; 
-    bzero(fpath , 4096); 
+    char *s = dirent->d_name ; 
+    printf("%s/%s\n", current_work_directory , s ) ; 
+    //get_ownership(fpath) ; 
+    //bzero(fpath , 4096); 
   }
   free(current_work_directory) ; 
   current_work_directory=0 ; 
